@@ -6,12 +6,15 @@ from kivy.uix.button import Button
 
 class MyGrid(GridLayout):
     def __init__(self, **kwargs):
+        # main grid layout
         super(MyGrid, self).__init__(**kwargs)
         self.cols = 1
 
+        # inner grid layout within the main grid
         self.inside = GridLayout()
         self.inside.cols = 2
 
+        # adding widgets to the inner grid 
         self.inside.add_widget(Label(text="First Name: "))
         self.first_name = TextInput(multiline=False)
         self.inside.add_widget(self.first_name)
@@ -24,8 +27,10 @@ class MyGrid(GridLayout):
         self.email = TextInput(multiline=False)
         self.inside.add_widget(self.email)
 
+        # adding the inner grid to the main grid as a widget
         self.add_widget(self.inside)
 
+        # the button is part of the main grid, not the inner grid
         self.submit = Button(text="Submit", font_size=40)
         self.submit.bind(on_press=self.pressed)
         self.add_widget(self.submit)
