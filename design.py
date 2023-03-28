@@ -4,9 +4,18 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
+from kivy.properties import ObjectProperty
 
 class MyGrid(Widget):
-    pass
+    firstname = ObjectProperty(None)
+    lastname = ObjectProperty(None)
+    email = ObjectProperty(None)
+
+    def press(self):
+        print(f"First Name: {self.firstname.text}, Last Name: {self.lastname.text}, Email: {self.email.text}")
+        self.firstname.text = ""
+        self.lastname.text = ""
+        self.email.text = ""
 
 class MyApp(App):
     def build(self):
