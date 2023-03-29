@@ -42,6 +42,7 @@ class CreateAccountWindow(Screen):
         if self.username.text == "" or self.email.text == "" or self.password.text == "":
             invalidForm()
         elif "@" in self.email.text and "." in self.email.text:
+            db.add_user(self.email.text, self.password.text, self.username.text)
             self.login()
             
     # switch to the login screen
