@@ -6,6 +6,27 @@ from kivy.uix.button import Button
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
+from kivy.properties import StringProperty, ObjectProperty
+
+
+class WidgetsExample(GridLayout):
+    my_text = StringProperty("1")
+    count_enabled = False
+    count = 1
+    def on_button_click(self):
+        if self.count_enabled:
+            self.count += 1
+    
+        self.my_text = str(self.count)
+
+    def on_toggle_button_state(self, widget):
+        print(f"State: {widget.state}")
+        if widget.state == "normal":
+            widget.text = "OFF"
+            self.count_enabled = False
+        else:
+            widget.text = "ON"
+            self.count_enabled = True
 
 
 class StackLayoutExample(StackLayout):
