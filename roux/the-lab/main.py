@@ -6,12 +6,12 @@ from kivy.uix.button import Button
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
-from kivy.properties import StringProperty, ObjectProperty
+from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
 
 
 class WidgetsExample(GridLayout):
     my_text = StringProperty("1")
-    count_enabled = False
+    count_enabled = BooleanProperty(False)
     count = 1
     def on_button_click(self):
         if self.count_enabled:

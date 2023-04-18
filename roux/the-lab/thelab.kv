@@ -12,6 +12,7 @@ WidgetsExample:
         id: btn
         text: "Count"
         on_press: root.on_button_click()
+        disabled: not root.count_enabled
     Label:
         text: root.my_text
         font_name: "fonts/Lcd.ttf"
