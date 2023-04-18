@@ -1,0 +1,35 @@
+BoxLayoutExample:
+
+<BoxLayoutExample>:
+    orientation: "vertical"
+    Button:
+        text: "A"
+        size: "100dp", "60dp"
+        size_hint: None, None
+        # x, center_x, right
+        # y, center_y, top
+        pos_hint: {"center_x":0.5}
+    Button:
+        text: "B"
+        size_hint: 0.5, None
+        height: "200dp"
+        pos_hint: {"center_x":0.5}
+    Button:
+        text: "C"
+        size_hint: None, 1
+        width: 200
+        pos_hint: {"x":0.15}
+
+
+<MainWidget>:
+    Button:
+        text: "Hello"
+        size: "100dp", "80dp"
+        pos: "100dp", "100dp"
+        color: 0,0,1,1
+
+    Label:
+        text: "Hello"
+        size: "100dp", "80dp"
+        pos: "300dp", "100dp"
+        color: 1,0,1,1
