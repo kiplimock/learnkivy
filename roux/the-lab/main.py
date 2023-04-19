@@ -20,13 +20,15 @@ class WidgetsExample(GridLayout):
         self.my_text = str(self.count)
 
     def on_toggle_button_state(self, widget):
-        print(f"State: {widget.state}")
         if widget.state == "normal":
             widget.text = "OFF"
             self.count_enabled = False
         else:
             widget.text = "ON"
             self.count_enabled = True
+    
+    def on_switch_active(self, widget):
+        print(f"Switch: {str(widget.active)}")
 
 
 class StackLayoutExample(StackLayout):
