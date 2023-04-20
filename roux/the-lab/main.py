@@ -12,6 +12,7 @@ from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
 class WidgetsExample(GridLayout):
     my_text = StringProperty("1")
     count_enabled = BooleanProperty(False)
+    slider_label_text = StringProperty("50")
     count = 1
     def on_button_click(self):
         if self.count_enabled:
@@ -29,6 +30,9 @@ class WidgetsExample(GridLayout):
     
     def on_switch_active(self, widget):
         print(f"Switch: {str(widget.active)}")
+    
+    def on_slider_value(self, widget):
+        self.slider_label_text = str(int(widget.value))
 
 
 class StackLayoutExample(StackLayout):

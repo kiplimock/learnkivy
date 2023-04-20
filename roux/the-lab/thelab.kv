@@ -19,9 +19,24 @@ WidgetsExample:
         font_size: "80dp"
         color: 1,0.5,1,1
     Switch:
+        id: switch
+        active: True
         on_active: root.on_switch_active(self)
         size_hint: None, 1
         width: "100dp"
+    Slider:
+        id: slider
+        min: 0
+        max: 100
+        value: 50
+        disabled: not switch.active
+        # on_value: root.on_slider_value(self)
+        orientation: "vertical"
+    Label:
+        text: str(int(slider.value))
+        font_name: "fonts/Lcd.ttf"
+        font_size: "50dp"
+        color: 1,0,1,1
 
 <PageLayoutExample@PageLayout>:
     MainWidget:
@@ -37,11 +52,11 @@ WidgetsExample:
 
 <StackLayoutExample>:
     # L->R or T->B
-    # orientation: "rl-bt"
+    orientation: "rl-bt"
     # left, top, right, bottom
-    # padding: ("20dp", "20dp", "20dp", "20dp")
+    padding: ("20dp", "20dp", "20dp", "20dp")
     # H, V
-    # spacing: "20dp", "20dp"
+    spacing: "20dp", "20dp"
 
 <GridLayoutExample@GridLayout>:
     cols: 3
