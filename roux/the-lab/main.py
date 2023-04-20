@@ -7,6 +7,9 @@ from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.properties import StringProperty, ObjectProperty, BooleanProperty
+from kivy.graphics import Line, Ellipse, Rectangle, Color
+from kivy.metrics import dp
+from kivy.properties import Clock
 
 
 class WidgetsExample(GridLayout):
@@ -76,5 +79,59 @@ class TheLabApp(App):
 class CanvasExample1(Widget):
     pass
 
+class CanvasExample2(Widget):
+    pass
+
+class CanvasExample3(Widget):
+    pass
+
+class CanvasExample4(Widget):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        with self.canvas:
+            Line(points=(10,10,100,100,110,90,200,200,300,320), width=2)
+            Color(0,1,0)
+            Line(circle=(400,200,100), width=2)
+            Line(rectangle=(400,400,150,100), width=3)
+            self.rect = Rectangle(pos=(10,200), size=(100,100))
+    
+    def on_button_a_click(self):
+        x, y = self.rect.pos
+        w, h = self.rect.size
+        inc = dp(10)
+        diff = self.width - (x + w)
+
+        if diff < inc:
+            inc = diff
+        x += inc
+        # y += dp(10)
+        self.rect.pos = (x, y)
+
+class CanvasExample5(Widget):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.s = dp(50)
+        self.vx = dp(3)
+        self.vy = dp(4)
+        with self.canvas:
+            self.ball = Ellipse(pos=(100,100), size=(self.s, self.s))
+        Clock.schedule_interval(self.update, 1/60)
+
+    def on_size(self, *args):
+        # print("On size: " + str(self.width) + ", " + str(self.height))
+        self.ball.pos = (self.center_x-self.s/2, self.center_y-self.s/2)
+    
+    def update(self, dt):
+        x, y = self.ball.pos
+        x += self.vx
+        y += self.vy
+        
+        if (x + self.s) > self.width or x < 0:
+            self.vx = -self.vx
+        if (y + self.s) > self.height or y < 0:
+            self.vy = -self.vy
+        
+        self.ball.pos = (x, y)
+ 
 if __name__ == "__main__":
     TheLabApp().run()
