@@ -1,4 +1,30 @@
-WidgetsExample:
+#:set s dp(150)
+
+CanvasExample1:
+
+<CanvasExample1>:
+    canvas:
+        Rectangle:
+            pos: self.center_x-s/2, self.center_y-s/2
+            size: s, s
+        Ellipse:
+            pos: self.center_x-s*2, self.center_y-s/4
+            size: s, s/2
+        Line:
+            points: (0,0,self.width/4,100,self.width/2,0,self.width*0.75,100,self.width,0)
+            width: 2
+
+<ImagesExample@GridLayout>:
+    cols: 3
+    spacing: "20dp", "20dp"
+    Image:
+        source: "images/cake.jpg"
+    Image:
+        source: "images/cake.jpg"
+        allow_stretch: True
+        keep_ratio: False
+    Image:
+        source: "images/cake.jpg"
 
 <WidgetsExample>:
     cols: 3
