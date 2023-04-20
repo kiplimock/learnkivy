@@ -42,6 +42,15 @@ WidgetsExample:
         ProgressBar:
             max: 100
             value: int(slider.value)
+    TextInput:
+        id: ti
+        text: "foobar"
+        size_hint: None, 1
+        width: "100dp"
+        multiline: False
+        on_text_validate: root.on_text_validate(self)
+    Label:
+        text: "Name: " + root.text_input
 
 <PageLayoutExample@PageLayout>:
     MainWidget:
