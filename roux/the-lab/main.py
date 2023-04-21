@@ -115,7 +115,7 @@ class CanvasExample5(Widget):
         self.vy = dp(4)
         with self.canvas:
             self.ball = Ellipse(pos=(100,100), size=(self.s, self.s))
-        Clock.schedule_interval(self.update, 1/60)
+        Clock.schedule_interval(self.update, 1)
 
     def on_size(self, *args):
         # print("On size: " + str(self.width) + ", " + str(self.height))
@@ -132,6 +132,9 @@ class CanvasExample5(Widget):
             self.vy = -self.vy
         
         self.ball.pos = (x, y)
+
+class CanvasExample6(Widget):
+    pass
  
 if __name__ == "__main__":
     TheLabApp().run()
