@@ -5,10 +5,19 @@ CanvasExample6:
 <CanvasExample6>:
     BoxLayout:
         size: root.size
-        Button:
-            text: "A"
-        Button:
-            text: "B"
+        Widget:
+            canvas:
+                Color:
+                    rgb: 0, 1, 0
+                Rectangle:
+                    size: self.size
+        Widget:
+            canvas:
+                Color:
+                    rgb: 0, 0, 1
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
 
 <CanvasExample4>:
     Button:
