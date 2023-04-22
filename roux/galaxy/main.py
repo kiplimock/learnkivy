@@ -7,14 +7,20 @@ from kivy.graphics import Line
 class MainWidget(Widget):
     perspective_point_x = NumericProperty(0)
     perspective_point_y = NumericProperty(0)
+
     vertical_lines = []
-    V_NB_LINES = 8
-    V_LINES_SPACING = 0.1
+    V_NB_LINES = 10
+    V_LINES_SPACING = 0.25 # percentage of screen width
+
+    horizontal_lines = []
+    H_NB_LINES = 15
+    H_LINES_SPACING = 0.1 # percentage of screen height
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         # print(f"INIT W: {self.width} H: {self.height}")
         self.init_vertical_lines()
+        self.init_horizontal_lines()
     
     def on_parent(self, widget, parent):
         # print(f"ON PARENT W: {self.width} H: {self.height}")
@@ -25,6 +31,7 @@ class MainWidget(Widget):
         # self.perspective_point_x = self.width/2
         # self.perspective_point_y = self.height * 3/4
         self.update_vertical_lines()
+        self.update_horizontal_lines()
     
     def on_perspective_point_x(self, widget, value):
         # print(f"PX: {value}")
@@ -51,6 +58,28 @@ class MainWidget(Widget):
 
             self.vertical_lines[i].points = [x1, y1, x2, y2]
             offset += 1
+    
+    def init_horizontal_lines(self):
+        with self.canvas:
+            Color(1,1,1)
+            for i in range(self.H_NB_LINES):
+                self.horizontal_lines.append(Line())
+
+    def update_horizontal_lines(self):
+        central_line_x = int(self.width/2)
+        spacing = self.V_LINES_SPACING * self.width
+        offset = -int(self.V_NB_LINES/2) + 0.5
+
+        xmin = central_line_x + offset * spacing
+        xmax = central_line_x - offset * spacing
+        spacing_y = self.H_LINES_SPACING * self.height
+
+        for i in range(self.H_NB_LINES):
+            other_line_y = i * spacing_y
+            x1, y1 = self.transform(xmin, other_line_y)
+            x2, y2 = self.transform(xmax, other_line_y)
+
+            self.horizontal_lines[i].points = [x1, y1, x2, y2]
 
     def transform(self, x, y):
         # return self.transform_2D(x, y)
@@ -60,15 +89,16 @@ class MainWidget(Widget):
         return int(x), int(y)
 
     def transform_perspective(self, x, y):
-        tr_y = (y / self.height) * self.perspective_point_y
-        if tr_y > self.perspective_point_y:
-            tr_y = self.perspective_point_y
+        lin_y = (y / self.height) * self.perspective_point_y
+        if lin_y > self.perspective_point_y:
+            lin_y = self.perspective_point_y
         
         diff_x = x - self.perspective_point_x
-        diff_y = self.perspective_point_y - tr_y
-        proportion_y = diff_y / self.perspective_point_y
+        diff_y = self.perspective_point_y - lin_y
+        factor_y = (diff_y / self.perspective_point_y) ** 4
 
-        tr_x = self.perspective_point_x + diff_x * proportion_y
+        tr_x = self.perspective_point_x + diff_x * factor_y
+        tr_y = self.perspective_point_y * (1 - factor_y)
         
         return int(tr_x), int(tr_y)
 
