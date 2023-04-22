@@ -20,10 +20,12 @@ class MainWidget(Widget):
     H_NB_LINES = 15
     H_LINES_SPACING = 0.1 # percentage of screen height
 
+    SPEED = 4
     current_offset = 0
+
+    SPEED_X = 12
+    current_speed_x = 0
     current_offset_x = 0
-    SPEED = 1
-    SPEED_X = 1
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
@@ -113,13 +115,23 @@ class MainWidget(Widget):
         
         return int(tr_x), int(tr_y)
 
+    def on_touch_down(self, touch):
+        if touch.x < self.width/2:
+            self.current_speed_x = self.SPEED_X
+        else:
+            self.current_speed_x = -self.SPEED_X
+    
+    def on_touch_up(self, touch):
+        self.current_speed_x = 0
+
+
     def update(self, dt):
         # print(f"dt: {dt}, 1/60: {1/60}")
         time_factor = dt * 60
         self.update_vertical_lines()
         self.update_horizontal_lines()
         self.current_offset += self.SPEED * time_factor
-        self.current_offset_x += self.SPEED_X * time_factor
+        self.current_offset_x += self.current_speed_x * time_factor
 
         spacing_y = self.H_LINES_SPACING * self.height
         if self.current_offset >= spacing_y:
