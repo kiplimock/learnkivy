@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, Clock
 from kivy.graphics import Color
 from kivy.graphics import Line
 
@@ -16,11 +16,15 @@ class MainWidget(Widget):
     H_NB_LINES = 15
     H_LINES_SPACING = 0.1 # percentage of screen height
 
+    current_offset = 0
+    SPEED = 1
+
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         # print(f"INIT W: {self.width} H: {self.height}")
         self.init_vertical_lines()
         self.init_horizontal_lines()
+        Clock.schedule_interval(self.update, 1.0 / 60.0)
     
     def on_parent(self, widget, parent):
         # print(f"ON PARENT W: {self.width} H: {self.height}")
@@ -30,8 +34,9 @@ class MainWidget(Widget):
         # print(f"ON SIZE W: {self.width} H: {self.height}")
         # self.perspective_point_x = self.width/2
         # self.perspective_point_y = self.height * 3/4
-        self.update_vertical_lines()
-        self.update_horizontal_lines()
+        # self.update_vertical_lines()
+        # self.update_horizontal_lines()
+        pass
     
     def on_perspective_point_x(self, widget, value):
         # print(f"PX: {value}")
@@ -75,7 +80,7 @@ class MainWidget(Widget):
         spacing_y = self.H_LINES_SPACING * self.height
 
         for i in range(self.H_NB_LINES):
-            other_line_y = i * spacing_y
+            other_line_y = i * spacing_y - self.current_offset
             x1, y1 = self.transform(xmin, other_line_y)
             x2, y2 = self.transform(xmax, other_line_y)
 
@@ -101,6 +106,15 @@ class MainWidget(Widget):
         tr_y = self.perspective_point_y * (1 - factor_y)
         
         return int(tr_x), int(tr_y)
+
+    def update(self, dt):
+        self.update_vertical_lines()
+        self.update_horizontal_lines()
+        self.current_offset += self.SPEED
+
+        spacing_y = self.H_LINES_SPACING * self.height
+        if self.current_offset >= spacing_y:
+            self.current_offset -= spacing_y
 
 class GalaxyApp(App):
     pass
