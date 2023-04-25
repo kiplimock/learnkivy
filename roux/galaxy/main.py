@@ -31,7 +31,7 @@ class MainWidget(RelativeLayout):
     H_NB_LINES = 15
     H_LINES_SPACING = 0.1 # percentage of screen height
 
-    SPEED = 1
+    SPEED = 0.2
     current_offset = 0
     current_y_loop = 0
 
@@ -54,6 +54,7 @@ class MainWidget(RelativeLayout):
 
     menu_title = StringProperty("G   A   L   A   X   Y")
     button_title = StringProperty("START")
+    score_text = StringProperty("SCORE: 0")
 
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
@@ -71,6 +72,7 @@ class MainWidget(RelativeLayout):
         Clock.schedule_interval(self.update, 1.0 / 60.0)
     
     def reset_game(self):
+        self.score_text = "SCORE: 0"
         self.current_offset = 0
         self.current_y_loop = 0
         self.current_speed_x = 0
@@ -267,6 +269,7 @@ class MainWidget(RelativeLayout):
             while self.current_offset >= spacing_y:
                 self.current_offset -= spacing_y
                 self.current_y_loop += 1
+                self.score_text = f"SCORE: {self.current_y_loop}"
                 self.generate_tiles_coordinates()
         
             speed_x = self.current_speed_x * self.width / 100
