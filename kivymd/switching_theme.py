@@ -9,6 +9,7 @@ class Example(MDApp):
         self.theme_cls.theme_style_switch_animation = True
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Orange"
+        self.theme_cls.theme_style_switch_animation_duration = 0.8
 
         return (
             MDScreen(
